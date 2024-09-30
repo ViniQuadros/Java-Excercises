@@ -1,24 +1,25 @@
-//In an array of Strings, find the common chars among them
+//In an array of Strings, find the common chars among all of the strings and don't repeat
 import java.util.List;
 import java.util.ArrayList;
 
 public class SameLetter {
     public static List<String> commonChars(String[] words) {
         List<String> chars = new ArrayList<String>();
-        int size = 0;
 
         for (int i = 0; i < words[0].length(); i++) {
-            for (int j = 0; j < words[size].length(); j++) {
-                if (words[0].charAt(i) == words[size].charAt(j)) {
-                    String myChar = String.valueOf(words[0].charAt(i));
-                    chars.add(myChar);
+            Character currentChar = words[0].charAt(i);
+            String charString = currentChar.toString().toLowerCase();
+            boolean isCommon = true;
+
+            for (int j = 1; j < words.length; j++) {
+                if (words[j].toLowerCase().indexOf(charString) == -1) {
+                    isCommon = false;
+                    break;
                 }
             }
 
-            if (size == words.length - 1) {
-                break;
-            } else {
-                size++;
+            if (isCommon && !chars.contains(charString)) {
+                chars.add(charString);
             }
         }
 
@@ -26,12 +27,11 @@ public class SameLetter {
     }
 
     public static void main(String[] args) {
-        String words[] = { "Mestre", "Mestre", "Mestre", "Mestre" };
-
+        String words[] = { "Cars", "Scene", "Days" };
         List<String> myChar = commonChars(words);
 
         for (int i = 0; i < myChar.size(); i++) {
-            System.out.println(myChar.get(i));
+            System.out.print(myChar.get(i) + " ");
         }
     }
 }
